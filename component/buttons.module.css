@@ -1,5 +1,9 @@
 .top-bt{
   display: flex;
   justify-content: space-between;
-  margin-top: 100px;
+}
+.buttonLeft{
+  display: flex;
+  width: 220px;
+  justify-content: space-between;
 }
