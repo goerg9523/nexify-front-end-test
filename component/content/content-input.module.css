@@ -3,13 +3,14 @@
   align-items: center;
 }
 .nameInput {
-  margin-right: 90px;
+  margin-right: 100px;
 }
 .birthdayInput {
   margin-right: 160px;
 }
 .salarySection {
-  margin-right: 150px;
+  margin-right: 215px;
+  position: relative;
 }
 .salarySlider {
   -webkit-appearence: none;
@@ -20,19 +21,67 @@
   /* background: #8CD2DC; */
   /* background: #58595B; */
   /* background: #323232; */
-  background: #8bc6cf;
+  background: rgba(74, 192, 191, 0.5);
   cursor: pointer;
 }
+/* Chrome and Safari*/
+.salarySlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(27, 78, 94);
+  border-radius: 50%; 
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
 
+/* Firefox */
+.salarySlider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(27, 78, 94);
+  border-radius: 50%; 
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Edge */
+.salarySlider::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(27, 78, 94);
+  border-radius: 50%; 
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
 .salaryValue {
+  position: absolute;
+  display: inline-flex;
   margin-left: 10px;
   font-size: 16px;
   font-weight: bold;
   color: #333;
+}
+.salaryValueInside{
+  width: 80px;
+  border: none;
+  background: rgba(0, 0, 0, 0);
 }
 .addressInput {
   margin-right: 155px;
 }
 .line {
   border-bottom: 1px solid lightgrey;
+}
+.nameSection{
+  position: relative
+}
+.errors{
+  color: red;
+  position: absolute;
+  font-size: 10px;
+}
+.dateSection{
+  position: relative;
 }

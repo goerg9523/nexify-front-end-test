@@ -1,7 +1,8 @@
 import React from 'react'
+import styles from "./update.module.css"
 
 export default function Update() {
   return (
-<button className="btn btn-warning">Update</button>
+<button className={`${styles['backColor']} btn`}>Update</button>
   )
 }

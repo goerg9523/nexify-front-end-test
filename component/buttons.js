@@ -13,9 +13,9 @@ export default function Buttons() {
         <Save />
         <Update />
       </div>
-      <div className={styles['buttonRight']}>
+      {/* <div className={styles['buttonRight']}>
         <Delete />
-      </div>
+      </div> */}
     </div>
   );
 }

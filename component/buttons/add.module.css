@@ -1,0 +1,13 @@
+.backColor{
+  background-color: rgba(74, 192, 191);
+  color: #fff;
+}
+
+.backColor:hover {
+  background-color: #fff;
+  color: rgb(22, 76, 75);
+  border: 1px solid rgb(22, 76, 75);
+  font-weight: bold;
+  transition: 0.2s ease;
+  transform: scale(1.1);
+}

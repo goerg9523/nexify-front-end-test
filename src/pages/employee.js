@@ -6,7 +6,7 @@ import styles from "./employee.module.css";
 
 export default function employee() {
   return (
-    <div className={styles['backColor']}>
+    <div className={styles["backColor"]}>
       <div className={`${styles["containBox"]} container bg`}>
         <Buttons />
         <Title />
