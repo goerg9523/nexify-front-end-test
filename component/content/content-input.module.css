@@ -1,9 +1,11 @@
 .contentData {
   display: flex;
   align-items: center;
+  border-top: 1px solid black;
+  padding: 10px 0 10px 0;
 }
 .nameInput {
-  margin-right: 100px;
+  margin-right: 70px;
 }
 .birthdayInput {
   margin-right: 160px;
@@ -70,9 +72,6 @@
 }
 .addressInput {
   margin-right: 155px;
-}
-.line {
-  border-bottom: 1px solid lightgrey;
 }
 .nameSection{
   position: relative

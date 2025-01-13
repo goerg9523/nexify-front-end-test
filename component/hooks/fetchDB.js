@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const useFetchDB = () => {
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     axios
@@ -11,7 +11,11 @@ const useFetchDB = () => {
       .catch((error) => conlog.error("Error fetching data: ", error));
   }, []);
 
-  return { formData };
+useEffect(()=>{
+  console.log("useFetchDB 內的fromData: ", formData); 
+},[formData])
+
+  return { formData, setFormData };
 };
 
 export default useFetchDB;
