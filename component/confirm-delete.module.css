@@ -1,56 +1,55 @@
-.container{
+.container {
   position: relative;
   width: 350px;
   height: 150px;
   background-color: white;
   border-radius: 10px;
-  top: -100px;
-  left: 450px;
+  top: -200px;
+  left: 770px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
+  box-shadow: 0px 0px 5px gray;
 }
 
-.check{
+.check {
   font-weight: bold;
 }
 
-.buttons{
-display: flex;
-justify-content: space-between;
-width: 220px;
-margin-top: 20px;
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 220px;
+  margin-top: 20px;
 }
 
-.buttons button{
+.buttons button {
   border: none;
   width: 100px;
   height: 30px;
   border-radius: 10px;
 }
 
-.okButton{
+.okButton {
   background: rgba(74, 192, 191, 0.3);
   color: black;
   transition: 0.4s ease;
 }
-.okButton:hover{
+.okButton:hover {
   background-color: rgba(74, 192, 191, 1);
   color: black;
   transform: scale(1.1);
 }
 
-.cancelButton{
+.cancelButton {
   background-color: rgb(236, 62, 62);
   color: white;
   transition: 0.4s ease;
-
 }
-.cancelButton:hover{
+.cancelButton:hover {
   background-color: rgb(240, 36, 36);
   color: white;
   transform: scale(1.1);
-
 }

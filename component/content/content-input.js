@@ -10,73 +10,67 @@ export default function ContentInput({
   setDeleteConfirmation,
   setShowConfirmation,
   showConfirmation,
+  setDeleteIndex,
 }) {
-  const [errorName, setErrorName] = useState(false);
-  const [errorDate, setErrorDate] = useState(false);
-  const [errorAddress, setErrorAddress] = useState(false);
+  const [errorName, setErrorName] = useState({});
+  const [errorDate, setErrorDate] = useState({});
+  const [errorAddress, setErrorAddress] = useState({});
+  // const [errorSalary, setErrorSalary] = useState({});
 
   // Name
   const handleNameChange = (e, i) => {
     const updatedName = [...formData.Data];
+    const regexName = /^[A-Za-z\u4e00-\u9fa5,.-]+$/;
     updatedName[i].Name = e.target.value;
     setFormData({ ...formData, Data: updatedName });
-  };
-
-  const validateName = (name) => {
-    const regexName = /^[A-Za-z\u4e00-\u9fa5,.-]+$/;
-    return setErrorName(!regexName.test(name));
+    setErrorName((prev) => ({
+      ...prev,
+      [i]: !regexName.test(e.target.value),
+    }));
   };
 
   //  Date
   const handleDateChange = (e, i) => {
     const updatedDate = [...formData.Data];
+    const today = new Date();
+    const inputDate = new Date(e.target.value);
     updatedDate[i].DateOfBirth = e.target.value;
     setFormData({ ...formData, Data: updatedDate });
-  };
-
-  const validateDate = (date) => {
-    const today = new Date().toISOString.split("T")[0];
-    const inputDate = new Date(date);
     if (inputDate >= today) {
-      return setErrorDate(true);
+      setErrorDate((prev) => ({
+        ...prev,
+        [i]: true,
+      }));
     } else {
-      return setErrorDate(false);
+      setErrorDate((prev) => ({
+        ...prev,
+        [i]: false,
+      }));
     }
-  };
-
-  // Address
-  const handleAddressChange = (e, i) => {
-    const updatedAddress = [...formData.Data];
-    updatedAddress[i].Address = e.target.value;
-    setFormData({ ...formData, Data: updatedAddress });
-  };
-
-  const validateAddress = (address) => {
-    const regexAddress = /^[A-Za-z\u4e00-\u9fa5,.-]+$/;
-    return setErrorAddress(
-      !(regexAddress.test(address) && address.length <= 200)
-    );
   };
 
   // Salary
   const handleSalaryValue = (e, i) => {
     const updatedSalary = [...formData.Data];
-    updatedSalary[i].Salary = Number(e.target.value.toLocaleString());
+    updatedSalary[i].Salary = Number(e.target.value.replace(/[^0-9.-]+/g, ''));
     setFormData({ ...formData, Data: updatedSalary });
   };
 
-  // Delete
-  const confirmDelete = () => {
-    setShowConfirmation(true);
+  // Address
+  const handleAddressChange = (e, i) => {
+    const updatedAddress = [...formData.Data];
+    const regexAddress = /^[A-Za-z\u4e00-\u9fa5,.-]+$/;
+    updatedAddress[i].Address = e.target.value;
+    setFormData({ ...formData, Data: updatedAddress });
+    setErrorAddress((prev) => ({
+      ...prev,
+      [i]: !regexAddress.test(e.target.value) && e.target.value.length <= 200,
+    }));
   };
 
   const handleDelete = (e, index) => {
     setShowConfirmation(true);
-    if (deleteConfirmation) {
-      const deleteData = formData.Data.filter((v, i) => i !== index);
-      setFormData({ ...formData, Data: deleteData });
-      setDeleteConfirmation(false);
-    }
+    setDeleteIndex(index);
   };
 
   // checking Data
@@ -102,7 +96,7 @@ export default function ContentInput({
                     handleNameChange(e, i);
                   }}
                 />
-                {errorName ? (
+                {errorName[i] ? (
                   <div className={styles["errors"]}>
                     Maximum 50 characters, with no special symbols.
                   </div>
@@ -121,7 +115,7 @@ export default function ContentInput({
                     handleDateChange(e, i);
                   }}
                 />
-                {errorDate ? (
+                {errorDate[i] ? (
                   <div className={styles["errors"]}>
                     The date should be earlier than today.
                   </div>
@@ -145,14 +139,13 @@ export default function ContentInput({
                 />
                 <span className={styles["salaryValue"]}>
                   <span>$</span>
-                  <input
-                    type="text"
-                    value={`${data.Salary.toLocaleString()}`}
+                  <span
                     className={styles["salaryValueInside"]}
                     onChange={(e) => {
                       handleSalaryValue(e, i);
                     }}
                   />
+                  {`${data.Salary.toLocaleString()}`}
                 </span>
               </span>
 
@@ -167,7 +160,7 @@ export default function ContentInput({
                     handleAddressChange(e, i);
                   }}
                 />
-                {errorAddress ? (
+                {errorAddress[i] ? (
                   <div className={styles["errors"]}>
                     Maximum 200 characters, with no special symbols.
                   </div>

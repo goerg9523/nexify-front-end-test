@@ -1,9 +1,5 @@
-.top-bt{
+.buttonContainer {
   display: flex;
-  justify-content: space-between;
-}
-.buttonLeft{
-  display: flex;
-  width: 220px;
+  width: 130px;
   justify-content: space-between;
 }

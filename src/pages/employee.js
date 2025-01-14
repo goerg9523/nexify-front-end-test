@@ -11,6 +11,8 @@ export default function employee() {
   const [formData, setFormData] = useState({});
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(0)
+  
 
   useEffect(() => {
     axios
@@ -22,8 +24,6 @@ export default function employee() {
   useEffect(() => {
     console.log("showConfirmation: ", showConfirmation);
   }, [showConfirmation]);
-
-  
 
   return (
     <div className={styles["backColor"]}>
@@ -37,10 +37,21 @@ export default function employee() {
           setDeleteConfirmation={setDeleteConfirmation}
           showConfirmation={showConfirmation}
           setShowConfirmation={setShowConfirmation}
+          setDeleteIndex={setDeleteIndex}
         />
-        {showConfirmation ? <ConfirmDelete setDeleteConfirmation={setDeleteConfirmation} setShowConfirmation={setShowConfirmation} /> : ""}
-        
       </div>
+      {showConfirmation ? (
+        <ConfirmDelete
+          setDeleteConfirmation={setDeleteConfirmation}
+          setShowConfirmation={setShowConfirmation}
+          deleteIndex={deleteIndex}
+          setDeleteIndex={setDeleteIndex}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
