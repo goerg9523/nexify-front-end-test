@@ -5,12 +5,12 @@ import Update from "./buttons/update";
 import Delete from "./buttons/delete";
 import styles from "./buttons.module.css";
 
-export default function Buttons() {
+export default function Buttons({ formData, setFormData }) {
   return (
     <div className={styles["top-bt"]}>
-      <div className={styles['buttonLeft']}>
-        <Add />
-        <Save />
+      <div className={styles["buttonLeft"]}>
+        <Add setFormData={setFormData} />
+        <Save formData={formData} />
         <Update />
       </div>
       {/* <div className={styles['buttonRight']}>

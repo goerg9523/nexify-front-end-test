@@ -1,23 +1,23 @@
 import React from "react";
 import styles from "./add.module.css";
-import useFetchDB from "../hooks/fetchDB";
+// import useFetchDB from "../hooks/fetchDB";
 
-export default function Add() {
-  const { formData, setFormData } = useFetchDB();
+export default function Add({ setFormData }) {
+  // const { formData, setFormData } = useFetchDB();
 
   const handleAddData = () => {
+    const today = new Date();
     const newItem = {
       Name: "",
-      DateOfBirth: "",
+      DateOfBirth: today,
       Salary: 0,
       Address: "",
     };
 
     setFormData((item) => {
       const addnew = { ...item, Data: [...item.Data, newItem] };
-      return { ...addnew };  // 強制返回新物件
+      return addnew;
     });
-
   };
 
   return (

@@ -1,20 +1,37 @@
 import React, { useState, useEffect } from "react";
 import styles from "./content-input.module.css";
 import { FaRegTrashCan } from "react-icons/fa6";
-import useFetchDB from "../hooks/fetchDB";
+import ConfirmDelete from "../confirm-delete";
 
-export default function ContentInput() {
-  const { formData } = useFetchDB();
-  const [salaryValue, setSalaryValue] = useState(0);
-  const [sliderValue, setSliderValue] = useState(0);
+export default function ContentInput({
+  formData,
+  setFormData,
+  deleteConfirmation,
+  setDeleteConfirmation,
+  setShowConfirmation,
+  showConfirmation,
+}) {
   const [errorName, setErrorName] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
   const [errorAddress, setErrorAddress] = useState(false);
-  const [formattedData, setFormattedData] = useState([]);
+
+  // Name
+  const handleNameChange = (e, i) => {
+    const updatedName = [...formData.Data];
+    updatedName[i].Name = e.target.value;
+    setFormData({ ...formData, Data: updatedName });
+  };
 
   const validateName = (name) => {
     const regexName = /^[A-Za-z\u4e00-\u9fa5,.-]+$/;
     return setErrorName(!regexName.test(name));
+  };
+
+  //  Date
+  const handleDateChange = (e, i) => {
+    const updatedDate = [...formData.Data];
+    updatedDate[i].DateOfBirth = e.target.value;
+    setFormData({ ...formData, Data: updatedDate });
   };
 
   const validateDate = (date) => {
@@ -27,6 +44,13 @@ export default function ContentInput() {
     }
   };
 
+  // Address
+  const handleAddressChange = (e, i) => {
+    const updatedAddress = [...formData.Data];
+    updatedAddress[i].Address = e.target.value;
+    setFormData({ ...formData, Data: updatedAddress });
+  };
+
   const validateAddress = (address) => {
     const regexAddress = /^[A-Za-z\u4e00-\u9fa5,.-]+$/;
     return setErrorAddress(
@@ -34,36 +58,33 @@ export default function ContentInput() {
     );
   };
 
-  const handleNameChange = (e) => {
-    e.target.preventDefault;
+  // Salary
+  const handleSalaryValue = (e, i) => {
+    const updatedSalary = [...formData.Data];
+    updatedSalary[i].Salary = Number(e.target.value.toLocaleString());
+    setFormData({ ...formData, Data: updatedSalary });
   };
 
-  const handleDateChange = (e) => {
-    e.target.preventDefault;
+  // Delete
+  const confirmDelete = () => {
+    setShowConfirmation(true);
   };
 
-  const handleAddressChange = (e) => {
-    e.target.preventDefault;
-  };
-
-  const handleSalaryValue = (salary) => {
-    let target = formData.Data.find((v, i) => {
-      v.Salary === salary;
-    });
-    if (target) {
-      let formatted = Number(target.Salary).toLocaleString();
-      setSalaryValue(formatted);
-      setSliderValue(target.Salary);
-      console.log(target.Salary);
+  const handleDelete = (e, index) => {
+    setShowConfirmation(true);
+    if (deleteConfirmation) {
+      const deleteData = formData.Data.filter((v, i) => i !== index);
+      setFormData({ ...formData, Data: deleteData });
+      setDeleteConfirmation(false);
     }
   };
 
+  // checking Data
   useEffect(() => {
     console.log("Fetching data successfully: ", formData);
-    // console.log(Array.isArray(formData.Data));
-  }, [formData]);
+    console.log(showConfirmation);
+  }, [formData, showConfirmation]);
 
-  
   return (
     <>
       {formData.Data && formData.Data.length > 0 ? (
@@ -78,7 +99,7 @@ export default function ContentInput() {
                   className={styles["nameInput"]}
                   value={data.Name}
                   onChange={(e) => {
-                    handleNameChange(e);
+                    handleNameChange(e, i);
                   }}
                 />
                 {errorName ? (
@@ -97,7 +118,7 @@ export default function ContentInput() {
                   className={styles["birthdayInput"]}
                   value={new Date(data.DateOfBirth).toISOString().split("T")[0]}
                   onChange={(e) => {
-                    handleDateChange(e);
+                    handleDateChange(e, i);
                   }}
                 />
                 {errorDate ? (
@@ -118,7 +139,9 @@ export default function ContentInput() {
                   className={styles["salarySlider"]}
                   value={data.Salary}
                   step={1000}
-                  onChange={handleSalaryValue}
+                  onChange={(e) => {
+                    handleSalaryValue(e, i);
+                  }}
                 />
                 <span className={styles["salaryValue"]}>
                   <span>$</span>
@@ -126,10 +149,13 @@ export default function ContentInput() {
                     type="text"
                     value={`${data.Salary.toLocaleString()}`}
                     className={styles["salaryValueInside"]}
-                    onChange={handleSalaryValue}
+                    onChange={(e) => {
+                      handleSalaryValue(e, i);
+                    }}
                   />
                 </span>
               </span>
+
               {/* Address */}
               <div className={styles["addressSection"]}>
                 <input
@@ -138,7 +164,7 @@ export default function ContentInput() {
                   className={styles["addressInput"]}
                   value={data.Address}
                   onChange={(e) => {
-                    handleAddressChange(e);
+                    handleAddressChange(e, i);
                   }}
                 />
                 {errorAddress ? (
@@ -151,7 +177,12 @@ export default function ContentInput() {
               </div>
 
               {/* Delete */}
-              <FaRegTrashCan />
+              <FaRegTrashCan
+                className={styles["deleteIcon"]}
+                onClick={(e) => {
+                  handleDelete(e, i);
+                }}
+              />
             </div>
           );
         })

@@ -84,3 +84,6 @@
 .dateSection{
   position: relative;
 }
+.deleteIcon{
+  cursor: pointer;
+}
